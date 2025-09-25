@@ -13,42 +13,48 @@
 
     body {
       font-family: "Segoe UI", Arial, sans-serif;
-      background: url("home_bg.png") no-repeat center center fixed;
-      background-size: cover;
-      min-height: 100vh;
+      background: #ffffff;
+      height: 100vh; /* always fits screen */
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: center; /* center content vertically */
       align-items: center;
-      color: #fff;
+      color: #333;
     }
 
-    header {
-      width: 100%;
-      padding: 20px 0;
-      background: rgba(255, 255, 255, 0.85);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    .container {
       display: flex;
+      flex-direction: column;
       justify-content: center;
+      align-items: center;
+      gap: 40px; /* spacing between logo, buttons, footer */
+      height: 90%; /* keeps footer visible */
     }
 
     .logo {
-      max-width: 220px;
+      max-width: 200px;
       height: auto;
+      transition: all 0.3s ease;
+    }
+
+    /* Logo smaller on mobile */
+    @media (max-width: 600px) {
+      .logo {
+        max-width: 140px; /* ~30% smaller */
+      }
     }
 
     .btn-group {
-      margin-top: 10px; /* reduced by 50% */
       display: flex;
       flex-direction: column;
-      gap: 35px; /* more spacing between buttons */
+      gap: 25px;
       align-items: center;
       width: 100%;
     }
 
     .btn-group a {
       text-decoration: none;
-      width: 340px;
+      width: 320px;
     }
 
     .nav-button {
@@ -56,12 +62,11 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 22px;
+      padding: 20px;
       font-size: 20px;
-      color: #ffffff;
       border: none;
-      border-radius: 12px;
-      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.4);
+      border-radius: 10px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
       transition: all 0.3s ease;
       cursor: pointer;
       text-align: center;
@@ -69,58 +74,48 @@
     }
 
     .nav-button:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 14px 22px rgba(0, 0, 0, 0.5);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.3);
     }
 
-    /* Specific button colors */
+    /* Button colors */
     .btn-1 {
-      background: linear-gradient(135deg, #f9d423, #ff4e50);
+      background: #fbbc05; /* Yellow */
+      color: #000;
     }
     .btn-1:hover {
-      background: linear-gradient(135deg, #ff4e50, #f9d423);
+      background: #e0a800;
     }
 
-    .btn-2 {
-      background: linear-gradient(135deg, #2575fc, #6a11cb);
+    .btn-2, .btn-3 {
+      background: #5f6368; /* Gray */
+      color: #fff;
     }
-    .btn-2:hover {
-      background: linear-gradient(135deg, #6a11cb, #2575fc);
-    }
-
-    .btn-3 {
-      background: linear-gradient(135deg, #11998e, #38ef7d);
-    }
-    .btn-3:hover {
-      background: linear-gradient(135deg, #38ef7d, #11998e);
+    .btn-2:hover, .btn-3:hover {
+      background: #3c4043;
     }
 
-    .nav-button span:first-child {
-      font-size: 22px;
-      font-weight: bold;
-      margin-bottom: 4px;
-    }
-
-    /* First button text: both lines same size + shadow */
+    /* Text styles */
     .btn-1 span {
-      font-size: 26px;
+      font-size: 24px;
       font-weight: 800;
-      text-shadow: 2px 2px 5px rgba(0,0,0,0.6);
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
     }
 
-    /* Yellow first line for 2nd & 3rd button */
     .btn-2 span:first-child,
     .btn-3 span:first-child {
-      color: #ffeb3b;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+      font-size: 20px;
+      font-weight: bold;
+      color: #ffeb3b; /* yellow highlight */
     }
 
-    .nav-button span:last-child {
+    .btn-2 span:last-child,
+    .btn-3 span:last-child {
       font-size: 18px;
       opacity: 0.95;
     }
 
-    /* Trophy styling + animation */
+    /* Trophy animation */
     .leaderboard-text {
       display: flex;
       align-items: center;
@@ -141,54 +136,49 @@
     }
 
     @keyframes bounce {
-      0%, 100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-6px);
-      }
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
     }
 
     footer {
-      margin: 20px 0;
-      font-size: 16px;
-      color: #000000; /* black text */
+      font-size: 14px;
+      color: #000000;
       text-align: center;
     }
   </style>
 </head>
 <body>
-  <header>
+  <div class="container">
     <img src="pp_logo.png" alt="Logo" class="logo" />
-  </header>
 
-  <div class="btn-group">
-    <a href="mainleader.html">
-      <button class="nav-button btn-1">
-        <span>2025 - 2026</span>
-        <span class="leaderboard-text">
-          <span class="trophy left">🏆</span>
-          Leaderboard
-          <span class="trophy right">🏆</span>
-        </span>
-      </button>
-    </a>
-    <a href="pg_leaderboard.html">
-      <button class="nav-button btn-2">
-        <span>Jom! Puzzle Hunt 2</span>
-        <span>Penang</span>
-      </button>
-    </a>
-    <a href="kl_leaderboard.html">
-      <button class="nav-button btn-3">
-        <span>Jom! Puzzle Hunt 1</span>
-        <span>Klang Valley</span>
-      </button>
-    </a>
+    <div class="btn-group">
+      <a href="mainleader.html">
+        <button class="nav-button btn-1">
+          <span>2025 - 2026</span>
+          <span class="leaderboard-text">
+            <span class="trophy left">🏆</span>
+            Leaderboard
+            <span class="trophy right">🏆</span>
+          </span>
+        </button>
+      </a>
+      <a href="pg_leaderboard.html">
+        <button class="nav-button btn-2">
+          <span>Jom! Puzzle Hunt 2</span>
+          <span>Penang</span>
+        </button>
+      </a>
+      <a href="kl_leaderboard.html">
+        <button class="nav-button btn-3">
+          <span>Jom! Puzzle Hunt 1</span>
+          <span>Klang Valley</span>
+        </button>
+      </a>
+    </div>
+
+    <footer>
+      Powered by : <strong>Puzzle Planet</strong>
+    </footer>
   </div>
-
-  <footer>
-    Powered by : <strong>Puzzle Planet</strong>
-  </footer>
 </body>
 </html>
