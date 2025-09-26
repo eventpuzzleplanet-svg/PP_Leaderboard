@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#4a90e2" />
-  <title>JPH1 Leaderboard</title> <!-- Browser tab title -->
+  <title>JPH1 Leaderboard</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -24,7 +24,7 @@
     }
 
     .top-left-logo {
-      position: absolute;
+      position: fixed;
       top: 12px;
       left: 12px;
       height: 60px;
@@ -32,16 +32,17 @@
     }
 
     .top-center-logo {
-  width: 100%;
-  position: relative;
-  text-align: center;
-}
+      width: 100%;
+      position: relative;
+      text-align: center;
+      margin: 20px 0 10px;
+    }
 
-.top-center-logo img {
-  height: 156px;
-  max-width: 90vw;
-  object-fit: contain;
-}
+    .top-center-logo img {
+      height: 156px;
+      max-width: 90vw;
+      object-fit: contain;
+    }
 
     h1 {
       margin: 10px 0 20px;
@@ -49,16 +50,20 @@
       font-size: 34.56px;
       font-weight: 700;
       color: #222;
+      text-align: center;
     }
 
     .search-box {
       width: 100%;
       max-width: 400px;
-      margin-bottom: 10px;
+      margin: 0 auto 10px;
+      display: flex;
+      justify-content: center;
     }
 
     #searchInput {
       width: 100%;
+      max-width: 100%;
       padding: 10px 16px;
       font-size: 16px;
       border-radius: 8px;
@@ -129,7 +134,11 @@
       h1 { font-size: 1.8em; }
       th, td { padding: 8px; font-size: 12px; }
       td:nth-child(2) div { padding-left: 8%; }
-      #searchInput { font-size: 14px; padding: 8px 12px; }
+      #searchInput {
+        font-size: 14px;
+        padding: 8px 12px;
+        width: 70% !important;
+      }
       .leaderboard { margin: 0 10px; }
     }
 
@@ -147,10 +156,10 @@
   <img src="logo.png" alt="Logo" class="top-left-logo" />
 
   <div class="top-center-logo">
-    <img src="jom1_logo.png" alt="JOM Logo" loading="lazy" />
+    <img src="jom1_logo.png" alt="JOM Logo" />
   </div>
 
-  <h1>Leaderboard</h1> <!-- On-page visible title -->
+  <h1>Leaderboard</h1>
 
   <div class="search-box">
     <input type="text" id="searchInput" placeholder="Search name..." oninput="filterRows()" />
@@ -180,18 +189,13 @@
       const text = await fetch('solo_kl.csv', { cache: "no-store" }).then(r => r.text());
       const lines = text.trim().split(/\r?\n/).slice(1);
 
-      const data = lines.map((line, index) => {
-        const [seat, name1, timeStr] = line.split(',').map(s => s.trim());
-        const rank = index + 1;
-        const score = (!timeStr || timeStr === '') ? 30
-                      : rank === 1 ? 1100
-                      : rank === 2 ? 800
-                      : rank === 3 ? 600
-                      : rank <= 5 ? 500
-                      : rank <= 10 ? 350
-                      : 80;
-        return { rank, name1, score };
+      let data = lines.map(line => {
+        const parts = line.split(',').map(s => s.trim());
+        return { name: parts[1], score: parseInt(parts[2]) || 0 };
       });
+
+      data.sort((a, b) => b.score - a.score);
+      data.forEach((d, i) => d.rank = i + 1);
 
       const tbody = document.getElementById("leaderboardTableBody");
       tbody.innerHTML = '';
@@ -207,7 +211,7 @@
 
         tr.innerHTML = `
           <td class="rank-cell">${d.rank}</td>
-          <td><div>${d.name1}</div></td>
+          <td><div>${d.name}</div></td>
           <td>${d.score}</td>
         `;
         tbody.appendChild(tr);
