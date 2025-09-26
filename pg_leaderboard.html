@@ -25,10 +25,10 @@
     }
 
     .top-left-logo {
-      position: absolute; /* changed from fixed so it scrolls with content */
+      position: absolute;
       top: 12px;
       left: 12px;
-      height: 60px; /* same as before */
+      height: 60px;
       object-fit: contain;
       z-index: 100;
     }
@@ -65,13 +65,14 @@
       padding: 13px 40px;
       background: #ddd;
       border: none;
-      border-radius: 10px;
+      border-radius: 9999px; /* pill shape */
       font-weight: bold;
       font-family: 'Poppins', sans-serif;
       cursor: pointer;
       margin: 0 5px;
       font-size: 16px;
       min-width: 150px;
+      transition: background-color 0.2s;
     }
 
     .tab-btn.active {
@@ -94,6 +95,7 @@
       border: 1px solid #ccc;
       font-family: 'Poppins', sans-serif;
       box-sizing: border-box;
+      transition: width 0.2s;
     }
 
     .leaderboard {
@@ -187,8 +189,9 @@
       td:nth-child(2) div {
         padding-left: 8%;
       }
-      /* Make search box input smaller on mobile */
+      /* Make search box input ~70% size on mobile */
       #searchInput {
+        width: 70%;
         font-size: 14px;
         padding: 6px 10px;
       }
@@ -307,8 +310,7 @@
              : d.rank === 3 ? 600
              : d.rank === 4 ? 500
              : d.rank === 5 ? 500
-             : d.rank <= 10 ? 350
-             : 80);
+             : d.rank <= 10 ? 350 : 80);
       });
 
       const tbody = document.getElementById("leaderboardTableBody");
